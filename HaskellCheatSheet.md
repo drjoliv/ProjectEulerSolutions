@@ -2,6 +2,11 @@
 
 ##Functions on lists
 
+
+| ###++```haskell--Concatenates two lists[1,2,3,4] ++ [5,6,7,8]-- [1,2,3,4,5,6,7,8]``` |   |   |
+|--------------------------------------------------------------------------------------|---|---|
+|                                                                                      |   |   |
+|                                                                                      |   |   |
 ###++
 
 ```haskell
@@ -83,21 +88,21 @@ reverse [1,2,3,4]
 
 ###sum
 ```haskell
-{-Takes sum of entire list-}
+--Takes sum of entire list
 sum [1,2,3,4,5]
 -- 15
 ```
 
 ###product
 ```haskell
-{-Takes product of entire list-}
+--Takes product of entire list
 product [1,2,3,4]
 -- 24
 ```
 
 ###elem
 ```haskell
-{-Test if given element is a memeber of the list-}
+--Test if given element is a memeber of the list.
 4 'elem' [1,4,3]
 -- true
 0 'elem' [1,4,3]
@@ -105,8 +110,9 @@ product [1,2,3,4]
 ```
 
 ###null
-{-Returns true if the list is empty false otherwise-}
+
 ```haskell
+{-Returns true if the list is empty false otherwise-}
 null [1,4,3]
 -- false
 null []
@@ -114,16 +120,17 @@ null []
 ```
 
 ###drop
-{-Removes elements from the beginning of the list.-}
+
 ```haskell
+{-Removes elements from the beginning of the list.-}
 drop 1 [1,4,3]
 -- [4,3]
 drop 2 [1,4,3]
 -- [3]
 ```
 ###take
-{-Extracts elements from the beginning of the list.-}
 ```haskell
+{-Extracts elements from the beginning of the list.-}
 take 1 [1,4,3]
 -- [1]
 take 2 [1,4,3]
