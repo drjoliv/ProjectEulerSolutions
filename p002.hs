@@ -8,7 +8,7 @@
 -- | The fib 'function' returns the nth element in the fibonacci sequence.
 -- The fibonacci sequence is the series of numbers 0, 1, 1, 2, 3, 5, 8, 13, 21, 34
 -- The next number in the sequence is found by adding the tqo numbers before it.
--- The Recurance can be defined  a~n~ = (a~n-1~) + (a~n-2~)
+-- The Recurance can be defined  a~n~ = (a~n-1~) + (a~n-2~) &#x3BB
 fib :: Integer -> Integer
 fib x 
 	| x == 1 = 1
