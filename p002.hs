@@ -11,5 +11,4 @@ import qualified EulerUTIL
  - takeWhile filters all values above four million.
  - Then sum adds all those values still in the list.
  -}
-ans = sum $ takeWhile (<4000000) [x | x <- EulerUTIL.fibs, even x]
-main = print ans
+problem_2 = sum $ takeWhile (<4000000) [x | x <- EulerUTIL.fibs, even x]
