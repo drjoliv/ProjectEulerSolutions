@@ -5,7 +5,7 @@ import qualified EulerUTIL
  - author: Desonte Jolivet
  - Problem: By considering the terms in the Fibonacci sequence whose
  - values do not exceed four million, find the sum of the even-valued terms.
- - 
+ -
  - Description:
  - [x | x <- EulerUTIL.fibs, even x] list containing even Fibonacci numbers.
  - takeWhile filters all values above four million.
