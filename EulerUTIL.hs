@@ -7,7 +7,11 @@ module EulerUTIL
 , fibs
 , primes
 , primefactors
-, lcm
+, isPrime
+, lcm'
+, divisors
+, factorial
+, isPalindrome
 ) where
 
 import Data.List
@@ -29,7 +33,10 @@ fibs = 1 : 2 : [ n | x <-[2..], let n = ((fibs !! (x-1)) + (fibs !! (x-2)))]
 --Returns list of prime factors
 -}
 primefactors :: Integer -> [Integer]
-primefactors i = primefactorshelper i primes    
+primefactors 0 = [] 
+primefactors 1 = [] 
+primefactors i = primefactorshelper i primes
+
 
 --helper method makes interface simpler
 primefactorshelper:: Integer -> [Integer] -> [Integer]
@@ -43,6 +50,9 @@ primefactorshelper i as@(x:xs)
 primes :: [Integer]
 primes = 2 : [ x | x <- [3..], let xs = take 2 $ primefactors x, null (tail xs)]
 
+isPrime :: Integer -> Bool
+isPrime x = (length . primefactors) x == 1
+
 --Finds the least common multiple of a list of numbers
 lcm' :: [Integer] -> Integer
 lcm' = product . foldr uniqueUnion [] . map EulerUTIL.primefactors
@@ -53,3 +63,17 @@ lcm' = product . foldr uniqueUnion [] . map EulerUTIL.primefactors
                 | a `elem` ex = a : uniqueUnion as ( delete a ex )
                 | e `elem` ax = e : uniqueUnion es ( delete e ax )
                 | otherwise = a : e : uniqueUnion as es
+
+-- Creates list of divisors
+divisors x               = map product $ sequence [take (k+1) $ iterate (p*) 1 | (p,k) <- primepowers x]
+     where primepowers n = [(head x, length x) | x <- group $ primefactors n]
+
+isPalindrome [] = True 
+isPalindrome [x] = True
+isPalindrome (x:xs) = if x == last xs  then isPalindrome (init xs) else False
+
+
+factorial 0 = 1
+factorial 1 = 1
+factorial n = n * factorial (n-1) 
+
