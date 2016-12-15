@@ -10,7 +10,7 @@ import qualified Data.Set as Set
 import qualified Data.Map as M
 
 {-@authur Desonte Jolivet
- -@lastModified 1 December 2016
+ -@lastModified 15 December 2016
  -}
 
 -- problem 1-----------------------------------------------------
@@ -260,3 +260,12 @@ truncateLeft s = let s' = show s in (map read) $ map (`drop` s') [0.. length s' 
 
 problem_37 = sum $ (take 11) (filter isTruncatablePrime (drop 4 primes))
 
+
+-- problem 43 -------------------------------------------------
+pandigitals = [ x | x <- [1406357289..9999999999], isPandigital x]
+
+isPandigital :: Integer -> Bool
+isPandigital x = let x' = show x in length x' == 10 && all (\s -> s `elem` x') digits 
+    where digits = "0123456789"
+
+main = print $ sum . take 1000 $ pandigitals
