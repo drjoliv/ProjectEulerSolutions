@@ -1,4 +1,18 @@
 {-# LANGUAGE UnicodeSyntax #-}
+{-|
+ - Module      : Euler
+ - Description : Short description
+ - Copyright   : (c) Some Guy, 2013 Someone Else, 2014
+ - License     : GPL-3
+ - Maintainer  : jolivetdesonte@yahoo.com
+ - Stability   : experimental
+ - Portability : POSIX
+ -
+ - Here is a longer description of this module, containing some
+ - commentary with @some markup@.
+ -}
+module Euler where
+
 import Data.List (delete, sort, elemIndex, group, findIndex, transpose)
 import Data.List.Split (chunksOf)
 import Data.Set (Set, fromList, difference)
@@ -10,60 +24,68 @@ import Numeric (showIntAtBase)
 import qualified Data.Set as Set
 import qualified Data.Map as M
 
-{-@authur Desonte Jolivet
- -@lastModified 15 December 2016 -}
 
--- problem 1------------------------------------------------------
+-- | problem 1
 problem_1 = sum [x | x <- [1..999], x `mod` 3 ==0 || x `mod` 5 ==0]
 
--- problem 2------------------------------------------------------
+-- | problem 2
 problem_2 = sum $ takeWhile (<4000000) [x | x <- fibs, even x]
 
--- the nth value of Fibonacci sequence
-fib :: Integer -> Integer
+-- |The 'fib' function takes an Integer and returns the 
+-- nth element in the fibonacci sequence.
+fib :: Integer -- ^ The fibonnaci number to obtain.
+    -> Integer -- ^ The 'nth' fibonacci number
 fib x = fibs !! (fromIntegral  x)
 
---Infinite list of Fibonacci sequence.
+-- |Infinite list of Fibonacci sequence.
 fibs :: [Integer]
 fibs = 1 : 2 : [ n | x <-[2..], let n = ((fibs !! (x-1)) + (fibs !! (x-2)))]
 
--- problem 3-----------------------------------------------------
-
+-- | problem 3
 problem_3 = maximum $ primefactors 600851475143
 
-primefactors :: Integer -> [Integer]
+-- | The 'primefactors' function finds list of primefactors of a number. 
+-- nth element in the fibonacci sequence.
+primefactors :: Integer   -- ^ A 'Interger' to find primefactors of..
+             -> [Integer] -- ^ A '[Interger]' containing list of primes
 primefactors 0 = []
 primefactors 1 = []
 primefactors i = primefactorshelper i primes
+    where primefactors' :: Integer -> [Integer] -> [Integer]
+          primefactors' i as@(x:xs)  
+            | i == x = [i]
+            | x * x > i = [i]
+            | i `mod` x == 0 = x : primefactors' (i `div` x) as
+            | otherwise = primefactors' i xs
 
---helper method makes interface simpler
-primefactorshelper:: Integer -> [Integer] -> [Integer]
-primefactorshelper i as@(x:xs)  
-     | i == x = [i]
-     | x * x > i = [i]
-     | i `mod` x == 0 = x : primefactorshelper (i `div` x) as
-     | otherwise = primefactorshelper i xs
 
---list of primes
+-- |'primes' is an infinite list of primes.
 primes :: [Integer]
 primes = 2 : [ x | x <- [3..], let xs = take 2 $ primefactors x, null (tail xs)]
 
-----isPrime :: Integer -> Bool
+-- | The 'isPrime' function check if an Integer is prime.
+isPrime :: Integer -- ^ An 'Integer' whose primality to check.
+        -> Bool    -- ^ 'True' if number is prime otherwise 'False'.
 isPrime x = (length . primefactors) x == 1
 
--- problem 4 --------------------------------------------------
+-- | problem 4
 problem_4 = maximum [x | y <- [100..999], z <- [y..999], let x = y * z, isPalindrome $ show x]
 
+-- | The 'isPalindrome' checks if a List is a plaindrome.
+isPalindrome :: Eq a => [a] -- ^ a 'List' of 'a' values
+                     -> Bool
 isPalindrome []  = True
 isPalindrome [a] = True
 isPalindrome (a:xs) = if (a == last xs)
      then isPalindrome (init xs)
-     else False 
+     else False
 
--- problem 5 --------------------------------------------------
+-- | problem 5
 problem_5 = lcm' [1..20]
 
-lcm' :: [Integer] -> Integer
+-- | This function returns the least common multiple of list of Integer
+lcm' :: [Integer] -- ^ [Integer] we would like to find the lease common multiple of
+     -> Integer   -- ^ Least Commom Multiple
 lcm' = product . foldr uniqueUnion [] . map primefactors
      where uniqueUnion :: [Integer] -> [Integer] -> [Integer]
            uniqueUnion [] as = as
@@ -73,19 +95,18 @@ lcm' = product . foldr uniqueUnion [] . map primefactors
                 | e `elem` ax = e : uniqueUnion es ( delete e ax )
                 | otherwise = a : e : uniqueUnion as es
 
--- problem 6 -------------------------------------------------
+-- | problem 6
 problem_6 = abs (sumOfSquares 100 - squareOfSums 100)
 
 sumOfSquares n = sum [ x*x | x <-[1..n]]
 squareOfSums n = square $ sum [1..n]
 square       x = x * x
 
--- problem 7 -------------------------------------------------
+-- | problem 7
 problem_7 = primes !! 10000
 
--- problem 8 -------------------------------------------------
-problem_8 = largestProduct 13 $ stringToIntList _1000_digit 
---evalState state_largest_product (_1000_digit, 0, 13)
+-- | problem 8
+problem_8 = largestProduct 13 $ stringToIntList _1000_digit
 
 _1000_digit = "7316717653133062491922511967442657474235534919493496983520312774506326239578318016984801869478851843858615607891129494954595017379583319528532088055111254069874715852386305071569329096329522744304355766896648950445244523161731856403098711121722383113622298934233803081353362766142828064444866452387493035890729629049156044077239071381051585930796086670172427121883998797908792274921901699720888093776657273330010533678812202354218097512545405947522435258490771167055601360483958644670632441572215539753697817977846174064955149290862569321978468622482839722413756570560574902614079729686524145351004748216637048440319989000889524345065854122758866688116427171479924442928230863465674813919123162824586178664583591245665294765456828489128831426076900422421902267105562632111110937054421750694165896040807198403850962455444362981230987879927244284909188845801561660979191338754992005240636899125607176060588611646710940507754100225698315520005593572972571636269561882670428252483600823257530420752963450"
 
@@ -105,14 +126,14 @@ stringToIntList = map digitToInt
 productString :: String -> Int 
 productString s = product $ map digitToInt s 
 
--- problem 9 -------------------------------------------------
+-- | problem 9
 problem_9 = [a * b * c |
                        a <- [1..334],
                        b <- [a+1..498],
                        c <- [b+1.. ceiling . sqrt . fromInteger $ (a^2 + b^2)],
                        (a + b + c) == 1000, a^2 + b^2 == c^2]
 
--- problem 10 ------------------------------------------------
+-- | problem 10
 problem_10 = sum $  takeWhile (<2000000) primes
 
 -- problem 11 ------------------------------------------------
@@ -182,10 +203,10 @@ problem_13 = readFile "p013input.txt" >>= (\s -> print $ (take 10 . show . sum) 
 -- problem 16 -------------------------------------------------
 problem_16 = sum $ map digitToInt $  show $ 2 ^ 1000
 
--- problem 20 -------------------------------------------------
 fractorial 1 = 1
 fractorial n = n * fractorial ( n -1 )
 
+-- problem 20 -------------------------------------------------
 problem_20 = sum $ map digitToInt . show . fractorial $ 100
 
 -- problem 21 -------------------------------------------------
@@ -236,15 +257,14 @@ abundance n
 
 problem_23 = sum $ difference (fromList [1..28123]) (fromList n')  
      where isAbundant x = case abundance x of Abundant -> [Just x]
-                                              _        -> [Nothing]
            n :: [Int]
            n            =  [1..28123] >>= isAbundant & catMaybes
            n'           =  [ x + y | x <- n, y <- n, y >= x ]
 
--- problem 25 --------------------------------------------------
+-- | problem 25
 problem_25 = fromJust (findIndex (\x -> (length . show) x == 1000) fibs) + 2 
 
--- problem 34 --------------------------------------------------
+
 digitFactorial :: Int -> Int
 digitFactorial x = sum $ (map factorial') (map digitToInt (show x))
      where factorial' 0 = 1
@@ -260,6 +280,7 @@ digitFactorial x = sum $ (map factorial') (map digitToInt (show x))
 
 isDigitFactorial x = x == digitFactorial x
 
+-- problem 34 --------------------------------------------------
 problem_34 =  sum [ x | x <- [3..1000000], isDigitFactorial x]
 
 -- problem 35 --------------------------------------------------
@@ -295,8 +316,10 @@ problem_37 = sum $ (take 11) (filter isTruncatablePrime (drop 4 primes))
 
 --pandigitals = [ x | x <- [1406357289..9999999999], isPandigital x]
 
---isPandigital :: Int -> Bool
---isPandigital x = {-# SCC "isPandigital" #-} x `mod` 9 == 0 &&
---    where digits = "0123456789"
+isPandigital :: Int -> Bool
+isPandigital x =  x `mod` 9 == 0 && sumDigits x == 45 && 
+    where digitsSum = sum [1..9]
+          isPandigital' x = 
+sumDigits x = if x == 0 then 0 else (x `mod` 10 ) + sumDigits (x `div` 10)
 
 main = problem_11_nums >>= print
