@@ -172,7 +172,7 @@ problem_10 = sum $  takeWhile (<2000000) primes
 --              diagLeft        = transpose
 --              diagRight       = transpose
 
-problem_11_nums = readFile "p011input.txt" >>= return
+problem_11_nums file = readFile file >>= return
                              . (map (read :: String -> Int))
                              . words
 
@@ -198,7 +198,7 @@ problem_12 = take 1 [x |
            | otherwise = divisors i (a+1) nums
 
 -- problem 13 -------------------------------------------------
-problem_13 = readFile "p013input.txt" >>= (\s -> print $ (take 10 . show . sum) $ read <$> lines s)
+problem_13 file = readFile file >>= (\s -> print $ (take 10 . show . sum) $ read <$> lines s)
 
 -- problem 16 -------------------------------------------------
 problem_16 = sum $ map digitToInt $  show $ 2 ^ 1000
@@ -236,7 +236,7 @@ amicableNumber n = present n >>= \a -> if a
 problem_21 =  sum . (map (\(x, y) -> x)) $ M.toList $ execState (amicableNumber 10000) M.empty
 
 -- problem 22 -------------------------------------------------
-problem_22 = readFile "names_p022.txt" >>=
+problem_22 file = readFile file >>=
        (print  . sum
                . zipWith (*) [1..]
                . (map (sum . (map position)))
