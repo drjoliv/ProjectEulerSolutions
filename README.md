@@ -1,11 +1,6 @@
 # ProjectEulerSolutions
-This repo exist for the soul purpose of sharpening my analytical and programming skills.
 
-#Language
-It is my belief that functional languages like Haskell are more suittable for solving mathmatical and analytical problems because of this i'll focus on solving these problems with Haskell.
+Solutions to euler problems using [jfunc](https://github.com/drjoliv/jfunc)
 
-##Completed Problems
-001 - 010
-012 - 013
-016
-020 - 023
+[Problem 1](https://github.com/drjoliv/ProjectEulerSolutions/blob/master/src/main/java/drjoliv/euler/Euler01.java)
+[Problem 2](https://github.com/drjoliv/ProjectEulerSolutions/blob/master/src/main/java/drjoliv/euler/Euler02.java)
