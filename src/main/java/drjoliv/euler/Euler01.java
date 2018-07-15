@@ -1,15 +1,21 @@
 package drjoliv.euler;
 
-import drjoliv.fjava.adt.FList;
-import static drjoliv.fjava.adt.FList.*;
+import static drjoliv.jfunc.nums.Integers.range;
 
-import drjoliv.fjava.nums.Numbers;
-import static drjoliv.fjava.nums.Numbers.*;
+import drjoliv.jfunc.data.list.FList;
+import drjoliv.jfunc.function.F0;
+import drjoliv.jfunc.nums.Integers;
 
-public class Euler01 {
+public class Euler01 implements F0<String> {
+
   public static int euler01() {
     FList<Integer> list = range(1,999)
                   .filter(i -> i % 3 == 0 || i % 5 == 0);
-    return list.foldr(Numbers::add, 0);
+    return list.foldr(Integers::add, 0);
+  }
+
+  @Override
+  public String call() {
+    return String.valueOf(euler01());
   }
 }
